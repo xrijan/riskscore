@@ -16,7 +16,7 @@ with gzip.open('random_forest_risk_score_model_compressed.pkl.gz', 'rb') as mode
 
 
 # Define the features used for prediction
-features = ['cost_t', 'age', 'dem_female', 'race', 'biomarkers', 'comorbidity']
+features = ['cost_t', 'age', 'dem_female', 'race', 'biomarkers', 'comorbidity'  ,'lasix_dose_count_tm1', 'cre_tests_tm1', 'crp_tests_tm1', 'esr_tests_tm1','ghba1c_tests_tm1', 'hct_tests_tm1', 'ldl_tests_tm1', 'nt_bnp_tests_tm1','sodium_tests_tm1', 'trig_tests_tm1']
 
 @app.route('/')
 def home():
