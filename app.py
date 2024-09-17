@@ -1,12 +1,11 @@
 from flask import Flask, request, jsonify, render_template
-from flask_compress import Compress
 import pickle
 import gzip
 import pandas as pd
-import numpy as np
+
 
 app = Flask(__name__)
-Compress(app)
+
 
 # Define the features used for prediction
 features = ['cost_t', 'age', 'dem_female', 'race', 'biomarkers', 'comorbidity',
@@ -67,6 +66,16 @@ def predict():
             return jsonify({'error': 'Missing required features'}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/get_result', methods=['GET'])
+def get_result():
+    # Retrieve prediction results from the query parameters
+    predicted_risk_score = request.args.get('predicted_risk_score')
+    
+    # Render the result.html template with the prediction result
+    return render_template('result.html', predicted_risk_score=predicted_risk_score)
+
 
 if __name__ == '__main__':
     app.run(debug=False, use_reloader=False)  # Turn off debug mode and auto-reloader for production
