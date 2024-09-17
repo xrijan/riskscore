@@ -25,16 +25,18 @@ def load_scaler_and_model():
 
     return scaler, model
 
-scaler, model = load_scaler_and_model()
-
 @app.route('/')
 def home():
     return render_template('index.html')
 
 # API route to predict risk score
 @app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     try:
+        # Load the scaler and model when needed
+        scaler, model = load_scaler_and_model()
+
         # Parse input data from the request
         data = request.get_json()
 
