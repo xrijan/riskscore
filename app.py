@@ -6,7 +6,6 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app)  # This will enable CORS for all routes
 
 
 # Define the features used for prediction
