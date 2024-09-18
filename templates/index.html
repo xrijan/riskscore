@@ -35,7 +35,7 @@
                     <h5>Form Details</h5>
                 </div>
 
-                <form action="predict.php" method="post">
+                <form onsubmit="return validateForm()">
                     <h2 class="formbold-form-title">Personal Details</h2>
 
                     <div class="formbold-input-flex">
@@ -43,14 +43,14 @@
                             <label for="firstname" class="formbold-form-label">
                                 Name*
                             </label>
-                            <input type="text" name="firstname" id="firstname" class="formbold-form-input" />
+                            <input type="text" name="firstname" id="firstname" class="formbold-form-input" required />
                         </div>
                     </div>
 
                     <div class="formbold-input-flex">
                         <div>
                             <label for="age" class="formbold-form-label">Age*</label>
-                            <select name="age" id="age" class="formbold-select">
+                            <select name="age" id="age" class="formbold-select" required>
                                 <option value="" disabled selected>Select your age</option>
                                 <option value="under_18">Under 18</option>
                                 <option value="18_24">18-24</option>
@@ -68,11 +68,13 @@
                             <label class="formbold-form-label">Gender*</label>
                             <div class="formbold-radio-group">
                                 <label class="formbold-radio-label">
-                                    <input type="radio" name="gender" value="male" class="formbold-radio-input" />
+                                    <input type="radio" name="gender" value="male" class="formbold-radio-input"
+                                        required />
                                     Male
                                 </label>
                                 <label class="formbold-radio-label">
-                                    <input type="radio" name="gender" value="female" class="formbold-radio-input" />
+                                    <input type="radio" name="gender" value="female" class="formbold-radio-input"
+                                        required />
                                     Female
                                 </label>
                             </div>
@@ -84,11 +86,13 @@
                             <label class="formbold-form-label">Race*</label>
                             <div class="formbold-radio-group">
                                 <label class="formbold-radio-label">
-                                    <input type="radio" name="race" value="Black" class="formbold-radio-input" />
+                                    <input type="radio" name="race" value="Black" class="formbold-radio-input"
+                                        required />
                                     Black
                                 </label>
                                 <label class="formbold-radio-label">
-                                    <input type="radio" name="race" value="White" class="formbold-radio-input" />
+                                    <input type="radio" name="race" value="White" class="formbold-radio-input"
+                                        required />
                                     White
                                 </label>
                             </div>
@@ -103,13 +107,14 @@
                                 lasix_dose_count_tm1*
                             </label>
                             <input type="number" name="lasix_dose_count_tm1" id="lasix_dose_count_tm1"
-                                class="formbold-form-input" />
+                                class="formbold-form-input" min="0" required />
                         </div>
                         <div>
                             <label for="cre_tests_tm1" class="formbold-form-label">
                                 cre_tests_tm1*
                             </label>
-                            <input type="number" name="cre_tests_tm1" id="cre_tests_tm1" class="formbold-form-input" />
+                            <input type="number" name="cre_tests_tm1" id="cre_tests_tm1" class="formbold-form-input"
+                                min="0" required />
                         </div>
                     </div>
 
@@ -118,13 +123,15 @@
                             <label for="crp_tests_tm1" class="formbold-form-label">
                                 crp_tests_tm1*
                             </label>
-                            <input type="number" name="crp_tests_tm1" id="crp_tests_tm1" class="formbold-form-input" />
+                            <input type="number" name="crp_tests_tm1" id="crp_tests_tm1" class="formbold-form-input"
+                                min="0" required />
                         </div>
                         <div>
                             <label for="esr_tests_tm1" class="formbold-form-label">
                                 esr_tests_tm1*
                             </label>
-                            <input type="number" name="esr_tests_tm1" id="esr_tests_tm1" class="formbold-form-input" />
+                            <input type="number" name="esr_tests_tm1" id="esr_tests_tm1" class="formbold-form-input"
+                                min="0" required />
                         </div>
                     </div>
 
@@ -134,13 +141,14 @@
                                 ghba1c_tests_tm1*
                             </label>
                             <input type="number" name="ghba1c_tests_tm1" id="ghba1c_tests_tm1"
-                                class="formbold-form-input" />
+                                class="formbold-form-input" min="0" required />
                         </div>
                         <div>
                             <label for="hct_tests_tm1" class="formbold-form-label">
                                 hct_tests_tm1*
                             </label>
-                            <input type="number" name="hct_tests_tm1" id="hct_tests_tm1" class="formbold-form-input" />
+                            <input type="number" name="hct_tests_tm1" id="hct_tests_tm1" class="formbold-form-input"
+                                min="0" required />
                         </div>
                     </div>
 
@@ -149,14 +157,15 @@
                             <label for="ldl_tests_tm1" class="formbold-form-label">
                                 ldl_tests_tm1*
                             </label>
-                            <input type="number" name="ldl_tests_tm1" id="ldl_tests_tm1" class="formbold-form-input" />
+                            <input type="number" name="ldl_tests_tm1" id="ldl_tests_tm1" class="formbold-form-input"
+                                min="0" required />
                         </div>
                         <div>
                             <label for="nt_bnp_tests_tm1" class="formbold-form-label">
                                 nt_bnp_tests_tm1*
                             </label>
                             <input type="number" name="nt_bnp_tests_tm1" id="nt_bnp_tests_tm1"
-                                class="formbold-form-input" />
+                                class="formbold-form-input" min="0" required />
                         </div>
                     </div>
 
@@ -166,14 +175,14 @@
                                 sodium_tests_tm1*
                             </label>
                             <input type="number" name="sodium_tests_tm1" id="sodium_tests_tm1"
-                                class="formbold-form-input" />
+                                class="formbold-form-input" min="0" required />
                         </div>
                         <div>
                             <label for="trig_tests_tm1" class="formbold-form-label">
                                 trig_tests_tm1*
                             </label>
-                            <input type="number" name="trig_tests_tm1" id="trig_tests_tm1"
-                                class="formbold-form-input" />
+                            <input type="number" name="trig_tests_tm1" id="trig_tests_tm1" class="formbold-form-input"
+                                min="0" required />
                         </div>
                     </div>
 
@@ -183,9 +192,9 @@
                         tempor incididunt.
                     </p>
                     <div class="formbold-input-flex">
-
                         <div>
-                            <input type="number" name="ldl_tests_tm1" id="ldl_tests_tm1" class="formbold-form-input" />
+                            <input type="number" name="biomarker" id="biomarker" class="formbold-form-input" min="0"
+                                required />
                         </div>
                     </div>
 
@@ -195,21 +204,31 @@
                         tempor incididunt.
                     </p>
                     <div class="formbold-input-flex">
-
                         <div>
-                            <input type="number" name="ldl_tests_tm1" id="ldl_tests_tm1" class="formbold-form-input" />
+                            <input type="number" name="comorbidity" id="comorbidity" class="formbold-form-input" min="0"
+                                required />
+                        </div>
+                    </div>
+                    <h2 class="formbold-form-title">Medical Cost</h2>
+                    <p style="padding-bottom: 10px;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt.
+                    </p>
+                    <div class="formbold-input-flex">
+                        <div>
+                            <input type="number" name="cost" id="cost" class="formbold-form-input" min="0" required />
                         </div>
                     </div>
                     <p class="formbold-policy">
                         By filling out this form and clicking submit, you acknowledge our
                         <a href="#">privacy policy.</a>
                     </p>
+                    <button class="formbold-btn" type="submit">Submit Data For Prediction</button>
+                </form>
             </div>
-            <button class="formbold-btn">Submit Data For Prediction</button>
-
-            </form>
         </div>
-    </div>
+
+        <script src="script.js"></script>
 
 </body>
 

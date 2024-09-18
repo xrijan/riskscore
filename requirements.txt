@@ -2,4 +2,5 @@ Flask==3.0.3
 pandas==2.2.2
 scikit-learn==1.4.2
 flask_compress==1.15
+flask-cors == 5.0.0
 gunicorn
