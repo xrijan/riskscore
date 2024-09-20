@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Risk Score Prediction</title>
 </head>
 
@@ -15,21 +15,22 @@
         <div class="formbold-form-wrapper">
             <div class="formbold-event-wrapper">
                 <span>RISK SCORE PREDICTION</span>
-                <h3>The design leadership conference</h3>
                 <svg width="490" height="215" viewBox="0 0 490 215" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="490" height="215" rx="5" fill="url(#pattern0)" />
                     <defs>
-                        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                            <use xlink:href="#image0_1675_1746"
-                                transform="translate(0 -0.524787) scale(0.000379363 0.000864594)" />
+                        <pattern id="pattern0" patternUnits="userSpaceOnUse" width="490" height="215">
+                            <image xlink:href="{{ url_for('static', filename='assets/health_care_background.png') }}"
+                                width="490" height="215" />
                         </pattern>
-
                     </defs>
                 </svg>
+
                 <h4>What you’ll learn</h4>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt.
+                    From a risk score, someone can learn the likelihood or probability of encountering potential risks,
+                    such as financial loss, health complications, or security threats. It helps in identifying high-risk
+                    areas, making informed decisions, and implementing strategies to minimize or manage those risks
+                    effectively.
                 </p>
                 <div class="formbold-event-details">
                     <h5>Form Details</h5>
@@ -188,8 +189,9 @@
 
                     <h2 class="formbold-form-title">Biomarkers</h2>
                     <p style="padding-bottom: 10px;">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt.
+                        Biomarker can be measured to assess
+                        health, disease progression, or response to treatment. It provides valuable information for
+                        diagnosis and monitoring. Please enter the average number range from (1-100).
                     </p>
                     <div class="formbold-input-flex">
                         <div>
@@ -200,8 +202,10 @@
 
                     <h2 class="formbold-form-title">Comorbidity</h2>
                     <p style="padding-bottom: 10px;">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt.
+
+                        Comorbidity refers to the presence of one or more additional health conditions occurring
+                        alongside a primary condition. It can complicate treatment and impact overall health
+                        outcomes.Please enter the average number range from (1-100).
                     </p>
                     <div class="formbold-input-flex">
                         <div>
@@ -211,8 +215,9 @@
                     </div>
                     <h2 class="formbold-form-title">Medical Cost</h2>
                     <p style="padding-bottom: 10px;">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt.
+                        Medical cost refers to the expenses associated with healthcare services, including diagnosis,
+                        treatment, medication, and ongoing care. It encompasses both direct costs, like hospital bills,
+                        and indirect costs, such as lost wages due to illness
                     </p>
                     <div class="formbold-input-flex">
                         <div>
@@ -220,15 +225,17 @@
                         </div>
                     </div>
                     <p class="formbold-policy">
-                        By filling out this form and clicking submit, you acknowledge our
-                        <a href="#">privacy policy.</a>
+                        The information shared includes your medical history, current health conditions, medications,
+                        allergies, and any relevant diagnostic results. This data helps healthcare providers better
+                        understand your health needs, personalize your treatment plan, and ensure safer, more effective
+                        care. Your privacy and confidentiality are prioritized throughout this process.
                     </p>
                     <button class="formbold-btn" type="submit">Submit Data For Prediction</button>
                 </form>
             </div>
         </div>
 
-        <script src="script.js"></script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 

@@ -6,7 +6,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-
+CORS(app)
 
 # Define the features used for prediction
 features = ['cost_t', 'age', 'dem_female', 'race', 'biomarkers', 'comorbidity',
@@ -27,6 +27,11 @@ scaler, model = load_scaler_and_model()
 @app.route('/')
 def home():
     return render_template('index.html')
+
+# Route for the result page
+@app.route('/result')
+def result():
+    return render_template('result.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
