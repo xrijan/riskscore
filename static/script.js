@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(JSON.stringify(data));
 
         // Send the data to the API via fetch
-        fetch('http://127.0.0.1:5000/predict', {
+        fetch('https://riskscore-predicition-d7a9cyfvfnf3fvc7.southindia-01.azurewebsites.net/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
