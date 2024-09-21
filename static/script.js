@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem('formData', JSON.stringify(Object.fromEntries(formData)));
                 localStorage.setItem('predictedRiskScore', result.predicted_risk_score.toFixed(2));
                 // Redirect to the result page
-                // window.location.href = 'result.html';
                 window.location.href = '/result';
 
 
