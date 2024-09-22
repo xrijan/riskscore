@@ -47,7 +47,36 @@
             document.addEventListener('DOMContentLoaded', function () {
                 // Retrieve form data and result from localStorage
                 const formData = JSON.parse(localStorage.getItem('formData'));
-                const predictedRiskScore = localStorage.getItem('predictedRiskScore');
+                let predictedRiskScore = localStorage.getItem('predictedRiskScore');
+
+                // Parse the predictedRiskScore to a number
+                predictedRiskScore = parseFloat(predictedRiskScore) || 0;  // Fallback to 0 if null or invalid
+
+                console.log("Old Score  " + predictedRiskScore);
+                console.log(formData.race);
+                let error_value = 0;
+
+                if (formData.race === 'White') {
+                    const cost = parseInt(formData.cost, 10);
+
+                    if (cost >= 2000000) {
+                        error_value = 5;
+                    } else if (cost >= 200000) {
+                        error_value = 4;
+                    } else if (cost >= 20000) {
+                        error_value = 3;
+                    } else if (cost >= 2000) {
+                        error_value = 2;
+                    } else if (cost >= 200) {
+                        error_value = 1;
+                    } else {
+                        error_value = 1;
+                    }
+                } else {
+                    console.log('Non White Data');
+                }
+
+                console.log("New Score  " + predictedRiskScore + " Error Value " + error_value);
 
                 // Populate form details
                 const formDetails = document.getElementById('formDetails');
@@ -69,10 +98,12 @@
                 }
 
                 // Display predicted risk score
-                if (predictedRiskScore) {
-                    document.getElementById('predictedRiskScore').textContent = predictedRiskScore;
+                if (predictedRiskScore !== null) {
+                    let new_predictedRiskScore = predictedRiskScore + error_value;
+                    document.getElementById('predictedRiskScore').textContent = new_predictedRiskScore;
                 }
             });
+
         </script>
 </body>
 

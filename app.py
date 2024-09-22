@@ -74,13 +74,13 @@ def predict():
         return jsonify({'error': str(e)}), 500
     
 
-@app.route('/get_result', methods=['GET'])
-def get_result():
-    # Retrieve prediction results from the query parameters
-    predicted_risk_score = request.args.get('predicted_risk_score')
+# @app.route('/get_result', methods=['GET'])
+# def get_result():
+#     # Retrieve prediction results from the query parameters
+#     predicted_risk_score = request.args.get('predicted_risk_score')
     
-    # Render the result.html template with the prediction result
-    return render_template('result.html', predicted_risk_score=predicted_risk_score)
+#     # Render the result.html template with the prediction result
+#     return render_template('result.html', predicted_risk_score=predicted_risk_score)
 
 
 if __name__ == '__main__':

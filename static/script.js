@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Log the data to the console for testing
         console.log(JSON.stringify(data));
-
         // Send the data to the API via fetch
         fetch('https://riskscore-predicition-d7a9cyfvfnf3fvc7.southindia-01.azurewebsites.net/predict', {
             method: 'POST',
@@ -55,16 +54,16 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result);
-
-                // Store form data and result in localStorage
+                // Store form data and updated result in localStorage
                 localStorage.setItem('formData', JSON.stringify(Object.fromEntries(formData)));
                 localStorage.setItem('predictedRiskScore', result.predicted_risk_score.toFixed(2));
+
                 // Redirect to the result page
                 window.location.href = '/result';
 
-
             })
             .catch(error => console.error('Error:', error));
+
+
     });
 });
