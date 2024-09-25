@@ -17,6 +17,18 @@ This repository contains a Python Flask web application that predicts a risk sco
 - Includes CORS handling for cross-origin requests.
   
 ## Installation
+
+## Create a Virtual Environment
+
+To isolate the project dependencies, it's recommended to use a virtual environment:
+
+```bash
+# On Windows
+python -m venv venv
+
+# On macOS/Linux
+python3 -m venv venv
+
  
 ### Prerequisites
 - Python 3.12
