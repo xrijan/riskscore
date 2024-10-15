@@ -20,8 +20,8 @@
 
             </div>
             <div class="formbold-event-wrapper">
-                <h3 id="riskScore">Hi, your predicted Risk score is </h3>
-                <h2 id="predictedRiskScore"></h2>.
+                <h3 id="riskScore">Hi, your predicted score is </h3>
+                <h2 id="predictedScore"></h2>.
                 <p>
                     This machine learning model is designed to predict health outcomes based on a variety of health data
                     inputs. Using advanced algorithms, the model analyzes features such as vital signs, medical history,
@@ -47,36 +47,11 @@
             document.addEventListener('DOMContentLoaded', function () {
                 // Retrieve form data and result from localStorage
                 const formData = JSON.parse(localStorage.getItem('formData'));
-                let predictedRiskScore = localStorage.getItem('predictedRiskScore');
+                let predictedScore = localStorage.getItem('predictedScore');
 
-                // Parse the predictedRiskScore to a number
-                predictedRiskScore = parseFloat(predictedRiskScore) || 0;  // Fallback to 0 if null or invalid
+                // Parse the predictedScore to a number
+                predictedScore = parseFloat(predictedScore) || 0;  // Fallback to 0 if null or invalid
 
-                console.log("Old Score  " + predictedRiskScore);
-                console.log(formData.race);
-                let error_value = 0;
-
-                if (formData.race === 'White') {
-                    const cost = parseInt(formData.cost, 10);
-
-                    if (cost >= 2000000) {
-                        error_value = 5;
-                    } else if (cost >= 200000) {
-                        error_value = 4;
-                    } else if (cost >= 20000) {
-                        error_value = 3;
-                    } else if (cost >= 2000) {
-                        error_value = 2;
-                    } else if (cost >= 200) {
-                        error_value = 1;
-                    } else {
-                        error_value = 1;
-                    }
-                } else {
-                    console.log('Non White Data');
-                }
-
-                console.log("New Score  " + predictedRiskScore + " Error Value " + error_value);
 
                 // Populate form details
                 const formDetails = document.getElementById('formDetails');
@@ -98,9 +73,8 @@
                 }
 
                 // Display predicted risk score
-                if (predictedRiskScore !== null) {
-                    let new_predictedRiskScore = predictedRiskScore + error_value;
-                    document.getElementById('predictedRiskScore').textContent = new_predictedRiskScore;
+                if (predictedScore !== null) {
+                    document.getElementById('predictedScore').textContent = predictedScore;
                 }
             });
 

@@ -213,16 +213,18 @@
                                 required />
                         </div>
                     </div>
-                    <h2 class="formbold-form-title">Medical Cost</h2>
+                    <h2 class="formbold-form-title">Output Variable</h2>
                     <p style="padding-bottom: 10px;">
-                        Medical cost refers to the expenses associated with healthcare services, including diagnosis,
-                        treatment, medication, and ongoing care. It encompasses both direct costs, like hospital bills,
-                        and indirect costs, such as lost wages due to illness
+                        Select the desired output veriables.
                     </p>
+
                     <div class="formbold-input-flex">
-                        <div>
-                            <input type="number" name="cost" id="cost" class="formbold-form-input" min="0" required />
-                        </div>
+                        <select name="output" id="output" class="formbold-select" required>
+                            <option value="" disabled selected>Select Output Veriable</option>
+                            <option value="risk_score_t">Risk Score</option>
+                            <option value="cost_t">Cost</option>
+                            <option value="cost_avoidable_t">Cost Avoidable</option>
+                        </select>
                     </div>
                     <p class="formbold-policy">
                         The information shared includes your medical history, current health conditions, medications,
