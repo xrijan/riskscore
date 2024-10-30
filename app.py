@@ -1,19 +1,15 @@
+
 from flask import Flask, request, jsonify, render_template
 import pickle
 import gzip
 import pandas as pd
 from flask_cors import CORS
 
-
+# Initialize the Flask application
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Enable Cross-Origin Resource Sharing (CORS)
 
-# Define the features used for prediction
-# features = ['cost_t', 'age', 'dem_female', 'race', 'biomarkers', 'comorbidity',
-#             'lasix_dose_count_tm1', 'cre_tests_tm1', 'crp_tests_tm1', 'esr_tests_tm1',
-#             'ghba1c_tests_tm1', 'hct_tests_tm1', 'ldl_tests_tm1', 'nt_bnp_tests_tm1',
-#             'sodium_tests_tm1', 'trig_tests_tm1']
-
+# Define the feature columns expected in input data
 FEATURES = [
     'age', 'dem_female', 'race', 'biomarkers', 'comorbidity',
     'lasix_dose_count_tm1', 'cre_tests_tm1', 'crp_tests_tm1', 'esr_tests_tm1',
@@ -21,17 +17,66 @@ FEATURES = [
     'sodium_tests_tm1', 'trig_tests_tm1'
 ]
 
-
+# Define the target columns for prediction
 TARGET_COLUMNS = ['risk_score_t', 'cost_t', 'cost_avoidable_t']
-# # Load the scaler and model once on startup
-# def load_scaler_and_model():
-#     with gzip.open('standard_scaler.pkl.gz', 'rb') as scaler_file_in:
-#         scaler = pickle.load(scaler_file_in)
-#     with gzip.open('random_forest_risk_score_model_compressed.pkl.gz', 'rb') as model_file_in:
-#         model = pickle.load(model_file_in)
-#     return scaler, model
 
-# Load the scaler and model once on startup
+# Define feature importance for each target, where weights represent the impact of each feature
+
+FEATURES_IMPORTANCE = {
+        "risk_score_t": {
+        "cre_tests_tm1": 0.331480,
+        "age":  0.116470,
+        "hct_tests_tm1": 0.110542,
+        "sodium_tests_tm1": 0.082573,
+        "ghba1c_tests_tm1": 0.053679,
+        "lasix_dose_count_tm1": 0.021110,
+        "esr_tests_tm1": 0.041045,
+        "trig_tests_tm1": 0.037929,
+        "ldl_tests_tm1": 0.030893,
+        "dem_female": 0.029604,
+        "nt_bnp_tests_tm1": 0.031657,
+        "race": 0.023662,
+        "comorbidity": 0.088552,
+        "crp_tests_tm1": 0.000805,
+        "biomarkers": 0.000000
+    },
+        "cost_t": {
+        "cre_tests_tm1": 0.174385,
+        "age": 0.153828,
+        "hct_tests_tm1": 0.129224,
+        "sodium_tests_tm1": 0.091458,
+        "ghba1c_tests_tm1": 0.097446,
+        "lasix_dose_count_tm1": 0.046513,
+        "esr_tests_tm1": 0.055875,
+        "trig_tests_tm1": 0.057166,
+        "ldl_tests_tm1": 0.057799,
+        "dem_female": 0.043361,
+        "nt_bnp_tests_tm1": 0.028622,
+        "race": 0.037774,
+        "comorbidity": 0.025631,
+        "crp_tests_tm1": 0.002510,
+        "biomarkers": 0.000000
+    },
+    "cost_avoidable_t": {
+        "cre_tests_tm1": 0.139867,
+        "age": 0.133759,
+        "hct_tests_tm1": 0.128026,
+        "sodium_tests_tm1": 0.105423,
+        "ghba1c_tests_tm1": 0.090256,
+        "lasix_dose_count_tm1": 0.077732,
+        "esr_tests_tm1": 0.060402,
+        "trig_tests_tm1": 0.060285,
+        "ldl_tests_tm1": 0.059386,
+        "dem_female": 0.046150,
+        "nt_bnp_tests_tm1": 0.042874,
+        "race": 0.034234,
+        "comorbidity": 0.019096,
+        "crp_tests_tm1": 0.002510,
+        "biomarkers": 0.000000
+    }
+}
+
+# Load the scaler and model once during application startup to avoid reloading on each request
 def load_scaler_and_model():
     with gzip.open('standard_scaler.pkl.gz', 'rb') as scaler_file_in:
         scaler = pickle.load(scaler_file_in)
@@ -39,88 +84,63 @@ def load_scaler_and_model():
         model = pickle.load(model_file_in)
     return scaler, model
 
+# Load the scaler and model at startup
 scaler, model = load_scaler_and_model()
 
+# Define the home route to render the main HTML page
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Route for the result page
+# Define route for displaying feature importance information
+@app.route('/features_importance')
+def feature_importance():
+    return render_template('features_importance.html')
+
+# Route for rendering a result page (if required in the front end)
 @app.route('/result')
 def result():
     return render_template('result.html')
 
-# @app.route('/predict', methods=['POST'])
-# def predict():
-#     try:
-#         # Parse input data from the request
-#         data = request.get_json()
-        
-#         # Convert data to DataFrame
-#         df = pd.DataFrame([data])
-        
-#         # Ensure correct dtypes to minimize memory usage
-#         df = df.astype({
-#             # 'cost_t': 'float32',
-#             'age': 'float32',
-#             'dem_female': 'int8',
-#             'race': 'int8',
-#             'biomarkers': 'float32',
-#             'comorbidity': 'int8',
-#             'lasix_dose_count_tm1': 'float32',
-#             'cre_tests_tm1': 'float32',
-#             'crp_tests_tm1': 'float32',
-#             'esr_tests_tm1': 'float32',
-#             'ghba1c_tests_tm1': 'float32',
-#             'hct_tests_tm1': 'float32',
-#             'ldl_tests_tm1': 'float32',
-#             'nt_bnp_tests_tm1': 'float32',
-#             'sodium_tests_tm1': 'float32',
-#             'trig_tests_tm1': 'float32'
-#         })
-
-#         # Check if all required features are present
-#         if all(feature in df.columns for feature in features):
-#             X = df[features]
-#             X_scaled = scaler.transform(X)
-#             predicted_risk_score = model.predict(X_scaled)[0]
-#             return jsonify({'predicted_risk_score': predicted_risk_score}), 200
-#         else:
-#             return jsonify({'error': 'Missing required features'}), 400
-#     except Exception as e:
-#         return jsonify({'error': str(e)}), 500
-    
+# Prediction route to handle POST requests with feature data for prediction
 @app.route('/predict', methods=['POST'])
 def predict():
+    # Check if the model and scaler are loaded properly
     if scaler is None or model is None:
         return jsonify({"error": "Model or scaler not loaded properly."}), 500
 
+    # Retrieve JSON data from the request
     data = request.get_json()
 
+    # If data is missing, return an error
     if not data:
         return jsonify({"error": "No input data provided"}), 400
 
-    # Extract features and desired targets from the request
+    # Extract input features, desired targets, and weight values from request data
     input_features = data.get('features')
     desired_targets = data.get('desired_targets')
+    weights = data.get('weight')
 
+    # Validate presence of required fields
     if input_features is None:
         return jsonify({"error": "Missing 'features' in input data"}), 400
-
     if desired_targets is None:
         return jsonify({"error": "Missing 'desired_targets' in input data"}), 400
+    if weights is None:
+        return jsonify({"error": "Missing 'weight' in input data"}), 400
 
-    # Validate desired targets
+    # Ensure desired targets are valid
     valid_targets = [target for target in desired_targets if target in TARGET_COLUMNS]
     invalid_targets = [target for target in desired_targets if target not in TARGET_COLUMNS]
 
+    # Return error if any invalid target is provided
     if invalid_targets:
         return jsonify({
             "error": f"Invalid target(s) specified: {invalid_targets}",
             "valid_targets": TARGET_COLUMNS
         }), 400
 
-    # Check for missing features
+    # Check if any required feature is missing in the input data
     missing_features = [feature for feature in FEATURES if feature not in input_features]
     if missing_features:
         return jsonify({
@@ -128,32 +148,67 @@ def predict():
             "missing_features": missing_features
         }), 400
 
+    # Check if any weight is missing in the input data
+    missing_weights = [feature for feature in FEATURES if feature not in weights]
+    if missing_weights:
+        return jsonify({
+            "error": "Missing required weights",
+            "missing_weights": missing_weights
+        }), 400
+
     try:
-        # Create DataFrame from input features
+        # Create a DataFrame from the input features
         input_df = pd.DataFrame([input_features], columns=FEATURES)
 
-        # Ensure correct data types (optional, based on your data)
-        # For example, converting to numeric, handling categorical if needed
-
-        # Scale the features
+        # Scale the input features using the preloaded scaler
         input_scaled = scaler.transform(input_df)
 
-        # Make predictions
+        # Predict the target values based on scaled input features
         predictions = model.predict(input_scaled)[0]
 
-        # Create a Series with target names
+        # Map predictions to target columns
         prediction_series = pd.Series(predictions, index=TARGET_COLUMNS)
 
-        # Select desired targets
+        # Select predictions for only the desired targets
         selected_predictions = prediction_series[valid_targets]
+       
+        
+        # Calculate weighted scores for each desired target using feature importance and weights
+        weighted_scores = {}
 
-        # Convert to dictionary for JSON response
-        response = selected_predictions.to_dict()
+
+        # for target in valid_targets:
+        #     if target in FEATURES_IMPORTANCE:
+        # # Calculate weighted score based solely on feature importance and weights
+        #         weighted_score = sum(
+        #         FEATURES_IMPORTANCE[target][feature] * weights[feature]
+        #         for feature in FEATURES if feature in FEATURES_IMPORTANCE[target]
+        #         )
+        #         weighted_scores[target] = weighted_score
+
+
+        for target in valid_targets:
+            if target in FEATURES_IMPORTANCE:
+                # Calculate weighted score using predicted score, feature importance, and request weight
+                weighted_score = selected_predictions[target] * sum(
+                    FEATURES_IMPORTANCE[target][feature] * weights[feature]
+                    for feature in FEATURES if feature in FEATURES_IMPORTANCE[target]
+                )
+                weighted_scores[target] = weighted_score
+
+        # Return predicted and weighted scores as a response
+        response = {
+            "predicted_scores": selected_predictions.to_dict(),
+            "weighted_scores": weighted_scores
+        }
 
         return jsonify(response), 200
 
     except Exception as e:
+        # Handle any errors during prediction process
         return jsonify({"error": f"An error occurred during prediction: {str(e)}"}), 500
 
+# Run the app in production mode
 if __name__ == '__main__':
-    app.run(debug=False, use_reloader=False)  # Turn off debug mode and auto-reloader for production
+    app.run(debug=False, use_reloader=False)  # Debug and auto-reloader turned off for production
+

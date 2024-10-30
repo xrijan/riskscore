@@ -5,25 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- <link rel="stylesheet" href="static/styles.css"> -->
+
     <title>Risk Score Prediction</title>
 </head>
 
 <body>
+
     <div class="formbold-main-wrapper">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
+
         <div class="formbold-form-wrapper">
             <div class="formbold-event-wrapper">
                 <span>RISK SCORE PREDICTION</span>
-                <svg width="490" height="215" viewBox="0 0 490 215" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="490" height="215" rx="5" fill="url(#pattern0)" />
-                    <defs>
-                        <pattern id="pattern0" patternUnits="userSpaceOnUse" width="490" height="215">
-                            <image xlink:href="{{ url_for('static', filename='assets/health_care_background.png') }}"
-                                width="490" height="215" />
-                        </pattern>
-                    </defs>
-                </svg>
+
+                <img src="https://www.yourteaminindia.com/hs-fs/hubfs/Imported_Blog_Media/Online-Exclusive-4-min-scaled-1-Sep-25-2023-10-20-41-4290-AM.jpg?width=816&height=460&name=Online-Exclusive-4-min-scaled-1-Sep-25-2023-10-20-41-4290-AM.jpg"
+                    alt="Risk Score Prediction" style="width:100%;">
 
                 <h4>What you’ll learn</h4>
                 <p>
@@ -35,6 +33,7 @@
                 <div class="formbold-event-details">
                     <h5>Form Details</h5>
                 </div>
+
 
                 <form onsubmit="return validateForm()">
                     <h2 class="formbold-form-title">Personal Details</h2>
@@ -62,6 +61,16 @@
                                 <option value="65_over">65 and over</option>
                             </select>
                         </div>
+
+                        <div>
+                            <label for="ageSlider" class="formbold-form-label">Age Weight (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="ageSlider" class="slider" min="0" max="1" step="0.01" value="0"
+                                    oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="ageSliderValue">0</div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="formbold-input-flex">
@@ -80,6 +89,16 @@
                                 </label>
                             </div>
                         </div>
+
+                        <div>
+                            <label for="genderSlider" class="formbold-form-label">Gender Weight (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="genderSlider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="genderSliderValue">0</div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="formbold-input-flex">
@@ -98,6 +117,14 @@
                                 </label>
                             </div>
                         </div>
+                        <div>
+                            <label for="raceSlider" class="formbold-form-label">Race Weight (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="raceSlider" class="slider" min="0" max="1" step="0.01" value="0"
+                                    oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="raceSliderValue">0</div>
+                            </div>
+                        </div>
                     </div>
 
                     <h2 class="formbold-form-title">Medical Details</h2>
@@ -111,13 +138,33 @@
                                 class="formbold-form-input" min="0" required />
                         </div>
                         <div>
+                            <label for="lasix_dose_count_tm1_Slider" class="formbold-form-label">lasix_dose_count_tm1
+                                Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="lasix_dose_count_tm1_Slider" class="slider" min="0" max="1"
+                                    step="0.01" value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="lasix_dose_count_tm1_SliderValue">0</div>
+                            </div>
+                        </div>
+                        <div>
                             <label for="cre_tests_tm1" class="formbold-form-label">
                                 cre_tests_tm1*
                             </label>
                             <input type="number" name="cre_tests_tm1" id="cre_tests_tm1" class="formbold-form-input"
                                 min="0" required />
                         </div>
+                        <div>
+                            <label for="cre_tests_tm1" class="formbold-form-label">cre_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="cre_tests_tm1_Slider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="cre_tests_tm1_SliderValue">0</div>
+                            </div>
+                        </div>
                     </div>
+
 
                     <div class="formbold-input-flex">
                         <div>
@@ -128,14 +175,32 @@
                                 min="0" required />
                         </div>
                         <div>
+                            <label for="crp_tests_tm1_Slider" class="formbold-form-label">crp_tests_tm1
+                                Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="crp_tests_tm1_Slider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="crp_tests_tm1_SliderValue">0</div>
+                            </div>
+                        </div>
+                        <div>
                             <label for="esr_tests_tm1" class="formbold-form-label">
                                 esr_tests_tm1*
                             </label>
                             <input type="number" name="esr_tests_tm1" id="esr_tests_tm1" class="formbold-form-input"
                                 min="0" required />
                         </div>
+                        <div>
+                            <label for="esr_tests_tm1_Slider" class="formbold-form-label">esr_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="esr_tests_tm1_Slider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="esr_tests_tm1_SliderValue">0</div>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="formbold-input-flex">
                         <div>
                             <label for="ghba1c_tests_tm1" class="formbold-form-label">
@@ -145,11 +210,29 @@
                                 class="formbold-form-input" min="0" required />
                         </div>
                         <div>
+                            <label for="ghba1c_tests_tm1_Slider" class="formbold-form-label">ghba1c_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="ghba1c_tests_tm1_Slider" class="slider" min="0" max="1"
+                                    step="0.01" value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="ghba1c_tests_tm1_SliderValue">0</div>
+                            </div>
+                        </div>
+                        <div>
                             <label for="hct_tests_tm1" class="formbold-form-label">
                                 hct_tests_tm1*
                             </label>
                             <input type="number" name="hct_tests_tm1" id="hct_tests_tm1" class="formbold-form-input"
                                 min="0" required />
+                        </div>
+                        <div>
+                            <label for="hct_tests_tm1_Slider" class="formbold-form-label">hct_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="hct_tests_tm1_Slider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="hct_tests_tm1_SliderValue">0</div>
+                            </div>
                         </div>
                     </div>
 
@@ -162,11 +245,29 @@
                                 min="0" required />
                         </div>
                         <div>
+                            <label for="ldl_tests_tm1_Slider" class="formbold-form-label">ldl_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="ldl_tests_tm1_Slider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="ldl_tests_tm1_SliderValue">0</div>
+                            </div>
+                        </div>
+                        <div>
                             <label for="nt_bnp_tests_tm1" class="formbold-form-label">
                                 nt_bnp_tests_tm1*
                             </label>
                             <input type="number" name="nt_bnp_tests_tm1" id="nt_bnp_tests_tm1"
                                 class="formbold-form-input" min="0" required />
+                        </div>
+                        <div>
+                            <label for="nt_bnp_tests_tm1_Slider" class="formbold-form-label">nt_bnp_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="nt_bnp_tests_tm1_Slider" class="slider" min="0" max="1"
+                                    step="0.01" value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="nt_bnp_tests_tm1_SliderValue">0</div>
+                            </div>
                         </div>
                     </div>
 
@@ -179,11 +280,29 @@
                                 class="formbold-form-input" min="0" required />
                         </div>
                         <div>
+                            <label for="sodium_tests_tm1_Slider" class="formbold-form-label">sodium_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="sodium_tests_tm1_Slider" class="slider" min="0" max="1"
+                                    step="0.01" value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="sodium_tests_tm1_SliderValue">0</div>
+                            </div>
+                        </div>
+                        <div>
                             <label for="trig_tests_tm1" class="formbold-form-label">
                                 trig_tests_tm1*
                             </label>
                             <input type="number" name="trig_tests_tm1" id="trig_tests_tm1" class="formbold-form-input"
                                 min="0" required />
+                        </div>
+                        <div>
+                            <label for="trig_tests_tm1_Slider" class="formbold-form-label">trig_tests_tm1 Weight
+                                (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="trig_tests_tm1_Slider" class="slider" min="0" max="1"
+                                    step="0.01" value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="trig_tests_tm1_SliderValue">0</div>
+                            </div>
                         </div>
                     </div>
 
@@ -197,6 +316,14 @@
                         <div>
                             <input type="number" name="biomarker" id="biomarker" class="formbold-form-input" min="0"
                                 required />
+                        </div>
+                        <div>
+                            <label for="biomarkerSlider" class="formbold-form-label">Biomarker Weight (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="biomarkerSlider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="biomarkerSliderValue">0</div>
+                            </div>
                         </div>
                     </div>
 
@@ -212,7 +339,16 @@
                             <input type="number" name="comorbidity" id="comorbidity" class="formbold-form-input" min="0"
                                 required />
                         </div>
+                        <div>
+                            <label for="comorbiditySlider" class="formbold-form-label">Comorbidity Weight (0-1)*</label>
+                            <div class="slider-container">
+                                <input type="range" id="comorbiditySlider" class="slider" min="0" max="1" step="0.01"
+                                    value="0" oninput="updateSliderValue(this)">
+                                <div class="slider-value" id="comorbiditySliderValue">0</div>
+                            </div>
+                        </div>
                     </div>
+
                     <h2 class="formbold-form-title">Output Variable</h2>
                     <p style="padding-bottom: 10px;">
                         Select the desired output veriables.
@@ -234,10 +370,14 @@
                     </p>
                     <button class="formbold-btn" type="submit">Submit Data For Prediction</button>
                 </form>
+
+
             </div>
+
         </div>
 
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='script.js') }}">
+        </script>
 
 </body>
 

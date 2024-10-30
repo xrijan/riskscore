@@ -5,80 +5,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Risk Score Prediction</title>
+    <title>Comparison Results</title>
 </head>
 
 <body>
+
     <div class="formbold-main-wrapper">
-        <!-- Author: FormBold Team -->
-        <!-- Learn More: https://formbold.com -->
         <div class="formbold-form-wrapper">
-            <div class="formbold-event-details">
-                <h5>Form Details</h5>
-                <ul id="formDetails">
-                </ul>
-
-            </div>
             <div class="formbold-event-wrapper">
-                <h3 id="riskScore">Hi, your predicted score is </h3>
-                <h2 id="predictedScore"></h2>.
-                <p>
-                    This machine learning model is designed to predict health outcomes based on a variety of health data
-                    inputs. Using advanced algorithms, the model analyzes features such as vital signs, medical history,
-                    demographic data, and lifestyle factors to provide predictive insights. The model can identify
-                    patterns and correlations in the data to predict outcomes like the risk of disease, likelihood of
-                    complications, or prognosis over time.
+                <h3>Comparison Results</h3>
+                <div class="formbold-event-details">
+                    <h5>Form Details</h5>
+                    <ul>
+                        <!-- Dynamic content will be injected here -->
+                    </ul>
+                </div>
 
-                    Key features include:
+                <div class="formbold-event-details">
+                    <h5>Parameters Weight</h5>
+                    <ul>
+                        <!-- Dynamic content will be injected here -->
+                    </ul>
+                </div>
 
-                    Input Data: Health parameters such as blood pressure, cholesterol levels, heart rate, and body mass
-                    index (BMI), along with personal health history and demographic factors.
-                    Output: The model generates predictions such as disease risk scores, recommendations for lifestyle
-                    changes, and forecasts of future health trends.
-                    Model Architecture: This predictive model is based on supervised learning algorithms such as Random
-                    Forest or Neural Networks, trained on a large, diverse dataset of historical health records.
-                    The goal is to provide personalized health insights to assist both patients and healthcare providers
-                    in making informed decisions about treatment and prevention strategies.
+                <div class="formbold-event-details">
+                    <h5>Desired Output</h5>
+                    <ul id="desired-output">
+                        <!-- Dynamic content will be injected here -->
+                    </ul>
+                </div>
+
+                <h4>Output</h4>
+                <p id="weight-score-output">
+                    <!-- Dynamic content will be injected here -->
+                </p>
+
+                <button id="reveal-button" class="formbold-btn" type="button">Reveal Predicted Score</button>
+
+                <p id="predicted-score-output">
+                    <!-- Predicted score will display here on button click -->
                 </p>
             </div>
-
         </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Retrieve form data and result from localStorage
-                const formData = JSON.parse(localStorage.getItem('formData'));
-                let predictedScore = localStorage.getItem('predictedScore');
+    </div>
 
-                // Parse the predictedScore to a number
-                predictedScore = parseFloat(predictedScore) || 0;  // Fallback to 0 if null or invalid
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const data = JSON.parse(localStorage.getItem('data'));
+            const result = JSON.parse(localStorage.getItem('result'));
+            const desired_targets = data.desired_targets;
 
-
-                // Populate form details
-                const formDetails = document.getElementById('formDetails');
-                if (formData) {
-                    for (const [key, value] of Object.entries(formData)) {
-                        let displayKey = key;
-                        if (key === 'gender') {
-                            displayKey = 'Sex';
-                        } else if (key === 'race') {
-                            displayKey = 'Race';
-                        } else {
-                            displayKey = key.replace(/_/g, ' ').toUpperCase();
-                        }
-
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span>${displayKey}:</span> <span>${value}</span>`;
-                        formDetails.appendChild(li);
-                    }
+            if (data && result) {
+                const formDetails = document.querySelector('.formbold-event-details:first-of-type ul');
+                for (const [key, value] of Object.entries(data.features)) {
+                    formDetails.innerHTML += `<li><strong>${key.replace(/_/g, ' ').toUpperCase()}:</strong> ${value}</li>`;
                 }
 
-                // Display predicted risk score
-                if (predictedScore !== null) {
-                    document.getElementById('predictedScore').textContent = predictedScore;
+                const weightDetails = document.querySelector('.formbold-event-details:nth-of-type(2) ul');
+                for (const [key, value] of Object.entries(data.weight)) {
+                    weightDetails.innerHTML += `<li><strong>${key.replace(/_/g, ' ').toUpperCase()}:</strong> ${value}</li>`;
                 }
-            });
 
-        </script>
+                const desiredOutput = document.getElementById('desired-output');
+                data.desired_targets.forEach(target => {
+                    desiredOutput.innerHTML += `<li>${target}</li>`;
+                });
+
+                const weightScoreOutput = document.getElementById('weight-score-output');
+                weightScoreOutput.innerHTML = `
+                    <strong>Weight Score:</strong> ${result.weighted_scores[desired_targets] || 'N/A'} <br>
+                `;
+
+                document.getElementById('reveal-button').addEventListener('click', function () {
+
+                    const predictedScoreOutput = document.getElementById('predicted-score-output');
+                    predictedScoreOutput.innerHTML = `
+                        <strong>Predicted Score:</strong> ${result.predicted_scores[desired_targets] || 'N/A'}
+                    `;
+
+                    // Hide the button after click
+                    this.style.display = 'none';
+                });
+
+            } else {
+                document.body.innerHTML = '<p>No results available. Please go back and submit the form again.</p>';
+            }
+        });
+    </script>
+
 </body>
 
 </html>
