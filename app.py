@@ -18,7 +18,8 @@ FEATURES = [
 ]
 
 # Define the target columns for prediction
-TARGET_COLUMNS = ['risk_score_t', 'cost_t', 'cost_avoidable_t']
+TARGET_COLUMNS = ['risk_score_t', 'cost_t', 'bps_mean_t', 'gagne_sum_t', 'ldl_mean_t']
+
 
 # Define feature importance for each target, where weights represent the impact of each feature
 
@@ -57,24 +58,61 @@ FEATURES_IMPORTANCE = {
         "crp_tests_tm1": 0.002510,
         "biomarkers": 0.000000
     },
-    "cost_avoidable_t": {
-        "cre_tests_tm1": 0.139867,
-        "age": 0.133759,
-        "hct_tests_tm1": 0.128026,
-        "sodium_tests_tm1": 0.105423,
-        "ghba1c_tests_tm1": 0.090256,
-        "lasix_dose_count_tm1": 0.077732,
-        "esr_tests_tm1": 0.060402,
-        "trig_tests_tm1": 0.060285,
-        "ldl_tests_tm1": 0.059386,
-        "dem_female": 0.046150,
-        "nt_bnp_tests_tm1": 0.042874,
-        "race": 0.034234,
-        "comorbidity": 0.019096,
-        "crp_tests_tm1": 0.002510,
+"bps_mean_t": {
+        "age": 0.200674,
+        "hct_tests_tm1": 0.139932,
+        "cre_tests_tm1": 0.099523,
+        "sodium_tests_tm1": 0.096317,
+        "ghba1c_tests_tm1": 0.085675,
+        "dem_female": 0.072795,
+        "esr_tests_tm1": 0.064653,
+        "trig_tests_tm1": 0.063822,
+        "ldl_tests_tm1": 0.063506,
+        "comorbidity": 0.045139,
+        "race": 0.028183,
+        "nt_bnp_tests_tm1": 0.022838,
+        "lasix_dose_count_tm1": 0.015517,
+        "crp_tests_tm1": 0.001427,
+        "biomarkers": 0.000000
+    },
+    "gagne_sum_t": {
+        "comorbidity": 0.348375,
+        "cre_tests_tm1": 0.148429,
+        "age": 0.098254,
+        "sodium_tests_tm1": 0.088527,
+        "hct_tests_tm1": 0.071717,
+        "ghba1c_tests_tm1": 0.068573,
+        "esr_tests_tm1": 0.030941,
+        "ldl_tests_tm1": 0.030435,
+        "trig_tests_tm1": 0.030433,
+        "dem_female": 0.027625,
+        "nt_bnp_tests_tm1": 0.022836,
+        "race": 0.018367,
+        "lasix_dose_count_tm1": 0.014738,
+        "crp_tests_tm1": 0.000751,
+        "biomarkers": 0.000000
+    },
+    "ldl_mean_t": {
+        "hct_tests_tm1": 0.157374,
+        "age": 0.130014,
+        "cre_tests_tm1": 0.117300,
+        "sodium_tests_tm1": 0.115766,
+        "ghba1c_tests_tm1": 0.100805,
+        "esr_tests_tm1": 0.072078,
+        "ldl_tests_tm1": 0.056939,
+        "comorbidity": 0.056806,
+        "trig_tests_tm1": 0.055816,
+        "race": 0.045980,
+        "dem_female": 0.039691,
+        "nt_bnp_tests_tm1": 0.029840,
+        "lasix_dose_count_tm1": 0.018002,
+        "crp_tests_tm1": 0.003589,
         "biomarkers": 0.000000
     }
+
 }
+
+
 
 # Load the scaler and model once during application startup to avoid reloading on each request
 def load_scaler_and_model():
