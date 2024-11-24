@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Log the data to the console for testing
         console.log(JSON.stringify(data));
         // Send the data to the API via fetch
-        fetch('http://127.0.0.1:5000/predict', {
+        fetch('https://main.d3erytf8ybffht.amplifyapp.com/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
