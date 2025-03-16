@@ -115,12 +115,14 @@ FEATURES_IMPORTANCE = {
 
 
 # Load the scaler and model once during application startup to avoid reloading on each request
+
 def load_scaler_and_model():
-    with gzip.open('standard_scaler.pkl.gz', 'rb') as scaler_file_in:
-        scaler = pickle.load(scaler_file_in)
-    with gzip.open('multi_output_random_forest_model_compressed.pkl.gz', 'rb') as model_file_in:
-        model = pickle.load(model_file_in)
+    with gzip.open('standard_scaler.pkl.gz', 'rb') as fin:
+        scaler = pickle.load(fin)
+    with gzip.open('multi_output_linear_model_compressed.pkl.gz', 'rb') as fin:
+        model = pickle.load(fin)
     return scaler, model
+
 
 # Load the scaler and model at startup
 scaler, model = load_scaler_and_model()
